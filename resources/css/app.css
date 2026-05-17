@@ -1,0 +1,371 @@
+@import "tailwindcss";
+
+@layer base {
+    :root {
+        --color-primary: #063e9c;
+        --color-secondary-1: #183447;
+        --color-secondary-2: #7093be;
+        --color-secondary-3: #deedfd;
+        --color-light: #fefefe;
+        --color-accent: #ff8a00;
+    }
+
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+        color: var(--color-primary);
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        color: var(--color-primary);
+    }
+
+    p {
+        color: var(--color-primary);
+    }
+}
+
+/* Hero Section - Override to white text */
+#hero h1,
+#hero h2,
+#hero h3,
+#hero h4,
+#hero h5,
+#hero h6,
+#hero p {
+    color: #ffffff;
+}
+
+#hero {
+    color: #ffffff;
+}
+
+@layer components {
+    /* Button Styles */
+    .btn-primary { 
+        padding: 12px 32px;
+        border-radius: 8px;
+        font-weight: 600;
+        transition: all 300ms;
+        display: inline-block;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        background-color: var(--color-primary);
+        color: var(--color-light);
+    }
+
+    .btn-primary:hover {
+        background-color: var(--color-secondary-1);
+        box-shadow: 0 10px 15px rgba(0, 0, 0, 0.15);
+    }
+
+    .btn-secondary { 
+        padding: 12px 32px;
+        border-radius: 8px;
+        font-weight: 600;
+        transition: all 300ms;
+        display: inline-block;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        background-color: var(--color-secondary-1);
+        color: var(--color-light);
+    }
+
+    .btn-secondary:hover {
+        background-color: var(--color-primary);
+    }
+
+    .btn-accent { 
+        padding: 12px 32px;
+        border-radius: 8px;
+        font-weight: 600;
+        transition: all 300ms;
+        display: inline-block;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        background-color: var(--color-accent);
+        color: var(--color-light);
+    }
+
+    .btn-accent:hover {
+        opacity: 0.9;
+    }
+
+    /* Hero Section Buttons */
+    .hero-section a[href="#about"] {
+        background-color: #ffffff !important;
+        color: var(--color-primary) !important;
+    }
+
+    .hero-section a[href="#about"] span {
+        color: var(--color-primary) !important;
+    }
+
+    .hero-section a[href="#about"]:hover {
+        background-color: #f0f0f0 !important;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2) !important;
+    }
+
+    .hero-section a[href="#portfolio"] {
+        background-color: #ffffff !important;
+        color: var(--color-accent) !important;
+        border: 2px solid #ffffff !important;
+    }
+
+    .hero-section a[href="#portfolio"] span {
+        color: var(--color-accent) !important;
+    }
+
+    .hero-section a[href="#portfolio"]:hover {
+        background-color: var(--color-accent) !important;
+        color: #ffffff !important;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2) !important;
+    }
+
+    .hero-section a[href="#portfolio"]:hover span {
+        color: #ffffff !important;
+    }
+
+    /* Stats Box Styling */
+    .hero-section .bg-white.bg-opacity-10 .grid-cols-3 p {
+        color: var(--color-primary) !important;
+    }
+
+    .hero-section .bg-white.bg-opacity-10 .text-center .text-2xl {
+        color: var(--color-accent) !important;
+    }
+
+    .hero-section .bg-white.bg-opacity-10 .text-center .text-xs {
+        color: var(--color-primary) !important;
+    }
+
+    /* Card Styles */
+    .card {
+        border-radius: 12px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        transition: all 300ms;
+    }
+
+    .card:hover {
+        box-shadow: 0 20px 25px rgba(0, 0, 0, 0.15);
+    }
+
+    .card-hover {
+        transform: translateY(0);
+        transition: all 300ms;
+    }
+
+    .card-hover:hover {
+        box-shadow: 0 20px 25px rgba(0, 0, 0, 0.15);
+        transform: translateY(-12px);
+    }
+
+    /* Section Container */
+    .section {
+        padding: 80px 16px;
+    }
+
+    @media (min-width: 640px) {
+        .section {
+            padding: 80px 24px;
+        }
+    }
+
+    @media (min-width: 1024px) {
+        .section {
+            padding: 80px 32px;
+        }
+    }
+
+    /* Section Headers */
+    .section-header {
+        font-size: clamp(2rem, 4vw, 2.5rem);
+        font-weight: 700;
+        margin-bottom: 16px;
+        text-align: center;
+        color: var(--color-primary);
+        letter-spacing: -0.5px;
+    }
+
+    .section-subtitle {
+        font-size: clamp(1rem, 2vw, 1.125rem);
+        text-align: center;
+        margin-bottom: 48px;
+        max-width: 48rem;
+        margin-left: auto;
+        margin-right: auto;
+        color: var(--color-secondary-2);
+        font-weight: 500;
+    }
+
+    /* Badge Style */
+    .badge {
+        display: inline-block;
+        padding: 8px 16px;
+        border-radius: 9999px;
+        font-weight: 600;
+        font-size: 14px;
+        background-color: var(--color-secondary-3);
+        color: var(--color-primary);
+    }
+
+    /* Gradient Backgrounds */
+    .bg-gradient-accent {
+        background: linear-gradient(90deg, var(--color-primary) 0%, var(--color-accent) 100%);
+    }
+
+    .bg-gradient-primary {
+        background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary-1) 100%);
+    }
+
+    /* Hero Section */
+    .hero-section {
+        padding: 16px;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary-1) 50%, #1a4d6d 100%);
+    }
+
+    .hero-section h1 {
+        animation: slideInDown 0.8s ease-out;
+        font-size: clamp(2rem, 5vw, 3.5rem);
+    }
+
+    .hero-section .badge {
+        font-size: 0.875rem;
+        padding: 0.5rem 1rem;
+    }
+
+    /* Link Hover Effects */
+    a {
+        transition: color 300ms;
+    }
+
+    /* Fade-in animation */
+    .fade-in {
+        animation: fadeIn 0.8s ease-in both;
+    }
+
+    /* Stagger animation for multiple elements */
+    .fade-in:nth-child(1) { animation-delay: 0.1s; }
+    .fade-in:nth-child(2) { animation-delay: 0.2s; }
+    .fade-in:nth-child(3) { animation-delay: 0.3s; }
+
+    /* Header specific styles */
+    header {
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        background-color: var(--color-light);
+        border-bottom: 3px solid rgb(222, 237, 253);
+    }
+
+    header nav {
+        padding: 12px 0;
+    }
+
+    header img {
+        filter: drop-shadow(0 2px 4px rgba(6, 62, 156, 0.1));
+    }
+
+    header h1 {
+        font-weight: 700;
+        color: var(--color-primary);
+    }
+
+    header p {
+        color: var(--color-secondary-2);
+    }
+
+    /* Responsive images */
+    img {
+        max-width: 100%;
+        height: auto;
+    }
+
+    /* Form elements */
+    input, textarea, select {
+        border-radius: 8px;
+        padding: 8px 16px;
+        border: 1px solid rgb(222, 237, 253);
+    }
+
+    input:focus, textarea:focus, select:focus {
+        outline: none;
+        box-shadow: 0 0 0 2px #ff8a00;
+    }
+
+    .shadow-accent { 
+        box-shadow: 0 6px 18px rgba(6, 62, 156, 0.12); 
+    }
+
+    .text-on-primary { 
+        color: var(--color-light);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.7;
+    }
+}
+
+@keyframes slideInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-bounce {
+    animation: bounce 2s infinite;
+}
+
+.animate-pulse {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Accessibility - Respect motion preferences */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* Print styles */
+@media print {
+    header, footer {
+        display: none;
+    }
+}
