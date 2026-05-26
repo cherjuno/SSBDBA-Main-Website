@@ -90,13 +90,3 @@ File upload disimpan pada `storage/app/public` dan dapat diakses dari `public/st
 - Pastikan `APP_URL` di `.env` benar saat menjalankan Vite atau saat membuat link statis.
 - Jika menemukan error parsing di tinker pada Windows Powershell, jalankan `php artisan tinker` tanpa embedding perintah yang mengandung kutip tunggal/berganda yang kompleks.
 
-## Langkah selanjutnya (opsional)
-- Integrasi editor WYSIWYG dan fitur upload gambar inline.
-- Otomasi instalasi plugin (ekstrak & registrasi).
-- Menambahkan test coverage untuk controllers admin dan models.
-
-## Lisensi
-Tidak ada lisensi tersertakan. Tambahkan file `LICENSE` jika ingin menambahkan lisensi.
-
----
-Jika mau, saya bisa menambahkan versi README berbahasa Inggris atau menambah bagian Deployment (Docker / Forge / Vapor). Mau saya tambahkan?
