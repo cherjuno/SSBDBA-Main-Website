@@ -1,59 +1,102 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# SSBDBA Main Website
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Dokumentasi singkat untuk proyek SSBDBA Main Website.
 
-## About Laravel
+## Ringkasan
+- Framework: Laravel (>=12) dan PHP ^8.2
+- Frontend: Tailwind CSS + Vite
+- DB: MySQL (disarankan)
+- Node: Node.js + npm
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Aplikasi ini adalah website institusi dengan landing page yang dapat diedit melalui Admin Dashboard. Fitur utama: halaman depan editorial, manajemen konten (SiteContent), CRUD Artikel dengan upload thumbnail, Plugin Manager, Events, People, dan formulir kontak.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Persyaratan
+- PHP 8.2+
+- Composer
+- MySQL (atau MariaDB)
+- Node.js (LTS) dan npm
+- ekstensi PHP umum: `pdo`, `mbstring`, `openssl`, `tokenizer`, `xml`, `ctype`, `json`
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Instalasi (lokal)
+1. Clone repository
 
-## Learning Laravel
+	git clone <repo-url> .
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+2. Install dependensi PHP
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+	composer install
 
-## Laravel Sponsors
+3. Salin file lingkungan dan atur variabel lingkungan
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+	cp .env.example .env
+	- Atur `DB_DATABASE`, `DB_USERNAME`, `DB_PASSWORD`
 
-### Premium Partners
+4. Generate app key
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+	php artisan key:generate
 
-## Contributing
+5. Jalankan migrasi dan seeder
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+	php artisan migrate --seed
 
-## Code of Conduct
+6. Buat symbolic link storage (untuk upload)
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+	php artisan storage:link
 
-## Security Vulnerabilities
+7. Install dependensi frontend dan jalankan dev server
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+	npm install
+	npm run dev
 
-## License
+8. Jalankan server lokal (opsional)
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+	php artisan serve
+
+Catatan: pada lingkungan XAMPP, arahkan VirtualHost atau DocumentRoot ke folder `public/`.
+
+## Admin
+- URL login admin: `/admin/login`
+- Kredensial seed awal:
+  - Username: `admin123`
+  - Password: `admin1234`
+
+Setelah login, Anda dapat mengakses Dashboard admin (prefix `/admin`) untuk:
+- Mengedit konten landing page (SiteContent)
+- Mengelola Artikel (CRUD + upload thumbnail)
+- Mengelola Plugin (unggah, aktif/non-aktif)
+
+File konfigurasi landing: [config/landing.php](config/landing.php)
+Model key-value konten: [app/Models/SiteContent.php](app/Models/SiteContent.php)
+
+## Struktur penting
+- Layout utama: [resources/views/layouts/app.blade.php](resources/views/layouts/app.blade.php)
+- Halaman depan: [resources/views/home.blade.php](resources/views/home.blade.php)
+- Admin views: [resources/views/admin](resources/views/admin)
+- Controller admin: [app/Http/Controllers/Admin*](app/Http/Controllers)
+- Migrations baru: `site_contents`, `articles`, `plugins`
+
+## Uploads dan storage
+File upload disimpan pada `storage/app/public` dan dapat diakses dari `public/storage` setelah menjalankan `php artisan storage:link`.
+
+## Perintah berguna
+- Migrate & seed: `php artisan migrate --seed`
+- Jalankan dev server vite: `npm run dev`
+- Build assets produksi: `npm run build`
+- Jalankan server laravel: `php artisan serve`
+
+## Catatan pengembang
+- Editor WYSIWYG (CKEditor/TinyMCE) belum terpasang penuh; integrasi image-insert endpoint ada pada controller artikel.
+- Plugin manager menerima file `.zip` tetapi ekstraksi/instalasi otomatis mungkin perlu pengembangan lebih lanjut.
+- Pastikan `APP_URL` di `.env` benar saat menjalankan Vite atau saat membuat link statis.
+- Jika menemukan error parsing di tinker pada Windows Powershell, jalankan `php artisan tinker` tanpa embedding perintah yang mengandung kutip tunggal/berganda yang kompleks.
+
+## Langkah selanjutnya (opsional)
+- Integrasi editor WYSIWYG dan fitur upload gambar inline.
+- Otomasi instalasi plugin (ekstrak & registrasi).
+- Menambahkan test coverage untuk controllers admin dan models.
+
+## Lisensi
+Tidak ada lisensi tersertakan. Tambahkan file `LICENSE` jika ingin menambahkan lisensi.
+
+---
+Jika mau, saya bisa menambahkan versi README berbahasa Inggris atau menambah bagian Deployment (Docker / Forge / Vapor). Mau saya tambahkan?
