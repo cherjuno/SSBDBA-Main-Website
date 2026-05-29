@@ -25,12 +25,42 @@
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 p-6">
                     @foreach ($section['fields'] as $field)
+                        @php
+                            $isUrlField = in_array($field['key'], [
+                                'contact_instagram',
+                                'contact_linkedin',
+                                'contact_youtube',
+                                'contact_tiktok',
+                                'contact_facebook',
+                                'contact_website_url',
+                                'resource_open_learning_url',
+                            ], true);
+                            $placeholderMap = [
+                                'contact_instagram' => 'https://instagram.com/username',
+                                'contact_linkedin' => 'https://linkedin.com/company/your-page',
+                                'contact_youtube' => 'https://youtube.com/@yourchannel',
+                                'contact_tiktok' => 'https://tiktok.com/@username',
+                                'contact_facebook' => 'https://facebook.com/yourpage',
+                                'contact_website_url' => 'https://ssbdba.itb.ac.id',
+                                'resource_open_learning_url' => 'https://youtube.com/playlist?list=...',
+                            ];
+                        @endphp
                         <div class="{{ $field['type'] === 'textarea' ? 'md:col-span-2' : '' }}">
                             <label for="{{ $field['key'] }}" class="block text-sm font-semibold text-slate-700 mb-2">{{ $field['label'] }}</label>
                             @if ($field['type'] === 'textarea')
                                 <textarea id="{{ $field['key'] }}" name="{{ $field['key'] }}" rows="4" class="w-full rounded-xl border-slate-300 focus:border-blue-600 focus:ring-blue-600">{{ old($field['key'], $content[$field['key']] ?? '') }}</textarea>
                             @else
-                                <input id="{{ $field['key'] }}" name="{{ $field['key'] }}" value="{{ old($field['key'], $content[$field['key']] ?? '') }}" class="w-full rounded-xl border-slate-300 focus:border-blue-600 focus:ring-blue-600">
+                                <input
+                                    id="{{ $field['key'] }}"
+                                    name="{{ $field['key'] }}"
+                                    type="{{ $isUrlField ? 'url' : 'text' }}"
+                                    placeholder="{{ $placeholderMap[$field['key']] ?? '' }}"
+                                    value="{{ old($field['key'], $content[$field['key']] ?? '') }}"
+                                    class="w-full rounded-xl border-slate-300 focus:border-blue-600 focus:ring-blue-600"
+                                >
+                            @endif
+                            @if ($isUrlField)
+                                <p class="mt-2 text-xs text-slate-500">Gunakan URL lengkap dan aktif. Khusus sosial media, domain harus sesuai platform resmi (instagram.com, linkedin.com, youtube.com/youtu.be, tiktok.com, facebook.com).</p>
                             @endif
                             @error($field['key'])
                                 <p class="mt-2 text-sm text-red-600">{{ $message }}</p>

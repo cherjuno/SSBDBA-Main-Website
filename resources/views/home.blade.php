@@ -2,14 +2,31 @@
 
 @php
     $c = $content ?? config('landing.defaults');
-    $teamRoles = [
+    $teamRoles = app()->getLocale() === 'id' ? [
+        'Kepala/Director',
+        'Koordinator Operasional & Kemitraan',
+        'Liaison Akademik',
+        'Lead Skill Development Track',
+        'Lead Workshop and Bootcamp',
+        'Lead Big Data & Machine Learning',
+        'Lead Social Simulation & ABM',
+    ] : [
         'Head/Director',
         'Operation & Partnership Lead',
-        'Academic Liason',
+        'Academic Liaison',
         'Lead Skill Development Track',
         'Lead Workshops and Bootcamp',
         'Lead Big Data & Machine Learning',
         'Lead Social Simulation & ABM',
+    ];
+
+    $resources = [
+        ['title' => $c['resource_open_learning_title'], 'description' => $c['resource_open_learning_description'], 'link' => $c['resource_open_learning_link'] ?? null, 'url' => $c['resource_open_learning_url'] ?? ''],
+        ['title' => $c['resource_module_title'], 'description' => $c['resource_module_description']],
+        ['title' => $c['resource_dataset_title'], 'description' => $c['resource_dataset_description']],
+        ['title' => $c['resource_workshops_title'], 'description' => $c['resource_workshops_description']],
+        ['title' => $c['resource_intern_title'], 'description' => $c['resource_intern_description']],
+        ['title' => $c['resource_cosmos_title'], 'description' => $c['resource_cosmos_description']],
     ];
 
     $events = [
@@ -18,6 +35,7 @@
         ['title' => $c['event_3_title'], 'description' => $c['event_3_description']],
         ['title' => $c['event_4_title'], 'description' => $c['event_4_description']],
         ['title' => $c['event_5_title'], 'description' => $c['event_5_description']],
+        ['title' => $c['event_6_title'], 'description' => $c['event_6_description']],
     ];
 @endphp
 
@@ -145,7 +163,7 @@
     <div class="max-w-7xl mx-auto">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
             <div class="fade-in">
-                <span class="section-kicker">Who we are</span>
+                <span class="section-kicker">{{ __('ui.section_who_we_are') }}</span>
                 <h1 class="mt-4 text-4xl md:text-6xl font-bold leading-tight text-text-dark">{{ $c['hero_title'] }}</h1>
                 <p class="mt-6 text-lg text-text-light max-w-2xl">{{ $c['hero_description'] }}</p>
             </div>
@@ -153,17 +171,21 @@
             <div class="card hero-grid p-8 md:p-10">
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                     <div class="hero-stat">
-                        <p class="text-xs uppercase tracking-[0.2em] text-accent font-bold mb-2">Establish</p>
+                        <p class="text-xs uppercase tracking-[0.2em] text-accent font-bold mb-2">{{ __('ui.establish') }}</p>
                         <p class="text-sm text-text-light">{{ $c['who_establish'] }}</p>
                     </div>
                     <div class="hero-stat">
-                        <p class="text-xs uppercase tracking-[0.2em] text-accent font-bold mb-2">Value</p>
+                        <p class="text-xs uppercase tracking-[0.2em] text-accent font-bold mb-2">{{ __('ui.value') }}</p>
                         <p class="text-sm text-text-light">{{ $c['who_value'] }}</p>
                     </div>
                     <div class="hero-stat">
-                        <p class="text-xs uppercase tracking-[0.2em] text-accent font-bold mb-2">Overview</p>
+                        <p class="text-xs uppercase tracking-[0.2em] text-accent font-bold mb-2">{{ __('ui.overview') }}</p>
                         <p class="text-sm text-text-light">{{ $c['who_overview'] }}</p>
                     </div>
+                </div>
+                <div class="mt-4 rounded-2xl border border-primary/10 bg-white/80 p-5">
+                    <p class="text-xs uppercase tracking-[0.2em] text-accent font-bold mb-2">{{ __('ui.brand_guidelines') }}</p>
+                    <p class="text-sm text-text-light">{{ $c['brand_guidelines_description'] ?? '' }}</p>
                 </div>
             </div>
         </div>
@@ -176,10 +198,10 @@
     <div class="max-w-7xl mx-auto">
         <div class="grid grid-cols-1 xl:grid-cols-2 gap-12 items-start">
             <div class="slide-in-up xl:sticky xl:top-28">
-                <span class="section-kicker">What we do</span>
+                <span class="section-kicker">{{ __('ui.section_what_we_do') }}</span>
                 <h2 class="section-title mt-4 max-w-lg">{{ $c['what_intro_title'] }}</h2>
                 <p class="section-subtitle mt-6 max-w-xl">{{ $c['what_intro_description'] }}</p>
-                <a href="#resources-services" class="btn btn-primary px-6 py-3 inline-flex mt-8">Lihat sumber daya</a>
+                <a href="#resources-services" class="btn btn-primary px-6 py-3 inline-flex mt-8">{{ __('ui.view_resources') }}</a>
             </div>
 
             <div class="grid grid-cols-1 gap-8">
@@ -190,7 +212,7 @@
                     <div class="p-7 md:p-8">
                         <h3 class="text-2xl mb-3">{{ $c['what_card_1_title'] }}</h3>
                         <p class="mb-4">{{ $c['what_card_1_description'] }}</p>
-                        <a href="#people" class="font-semibold text-primary hover:text-accent transition">Learn more ↗</a>
+                        <a href="#people" class="font-semibold text-primary hover:text-accent transition">{{ __('ui.learn_more') }} ↗</a>
                     </div>
                 </article>
 
@@ -201,7 +223,7 @@
                     <div class="p-7 md:p-8">
                         <h3 class="text-2xl mb-3">{{ $c['what_card_2_title'] }}</h3>
                         <p class="mb-4">{{ $c['what_card_2_description'] }}</p>
-                        <a href="#resources-services" class="font-semibold text-primary hover:text-accent transition">Learn more ↗</a>
+                        <a href="#resources-services" class="font-semibold text-primary hover:text-accent transition">{{ __('ui.learn_more') }} ↗</a>
                     </div>
                 </article>
 
@@ -212,7 +234,7 @@
                     <div class="p-7 md:p-8">
                         <h3 class="text-2xl mb-3">{{ $c['what_card_3_title'] }}</h3>
                         <p class="mb-4">{{ $c['what_card_3_description'] }}</p>
-                        <a href="#events" class="font-semibold text-primary hover:text-accent transition">Learn more ↗</a>
+                        <a href="#events" class="font-semibold text-primary hover:text-accent transition">{{ __('ui.learn_more') }} ↗</a>
                     </div>
                 </article>
             </div>
@@ -224,37 +246,21 @@
 <section id="resources-services" class="section section-anchor bg-light px-4">
     <div class="max-w-7xl mx-auto">
         <div class="text-center max-w-3xl mx-auto slide-in-up">
-            <span class="section-kicker justify-center">Resources & Services</span>
+            <span class="section-kicker justify-center">{{ __('ui.section_resources_services') }}</span>
             <h2 class="section-title mt-4">{{ $c['resources_title'] }}</h2>
             <p class="section-subtitle mt-4">{{ $c['resources_description'] }}</p>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-10">
-            <div class="card p-6">
-                <h3 class="text-xl mb-2">{{ $c['resource_open_learning_title'] }}</h3>
-                <p class="mb-4">{{ $c['resource_open_learning_description'] }}</p>
-                <a href="#" class="btn btn-primary px-5 py-2 inline-flex">{{ $c['resource_open_learning_link'] }}</a>
-            </div>
-            <div class="card p-6">
-                <h3 class="text-xl mb-2">{{ $c['resource_cosmos_title'] }}</h3>
-                <p>{{ $c['resource_cosmos_description'] }}</p>
-            </div>
-            <div class="card p-6">
-                <h3 class="text-xl mb-2">{{ $c['resource_dataset_title'] }}</h3>
-                <p>{{ $c['resource_dataset_description'] }}</p>
-            </div>
-            <div class="card p-6">
-                <h3 class="text-xl mb-2">{{ $c['resource_module_title'] }}</h3>
-                <p>{{ $c['resource_module_description'] }}</p>
-            </div>
-            <div class="card p-6">
-                <h3 class="text-xl mb-2">{{ $c['resource_workshops_title'] }}</h3>
-                <p>{{ $c['resource_workshops_description'] }}</p>
-            </div>
-            <div class="card p-6">
-                <h3 class="text-xl mb-2">{{ $c['resource_intern_title'] }}</h3>
-                <p>{{ $c['resource_intern_description'] }}</p>
-            </div>
+            @foreach ($resources as $resource)
+                <div class="card p-6">
+                    <h3 class="text-xl mb-2">{{ $resource['title'] }}</h3>
+                    <p class="mb-4">{{ $resource['description'] }}</p>
+                    @if (! empty($resource['link']) && ! empty($resource['url']))
+                        <a href="{{ $resource['url'] }}" class="btn btn-primary px-5 py-2 inline-flex">{{ $resource['link'] }}</a>
+                    @endif
+                </div>
+            @endforeach
         </div>
     </div>
 </section>
@@ -263,15 +269,15 @@
 <section id="events" class="section section-anchor bg-background-light px-4">
     <div class="max-w-7xl mx-auto">
         <div class="text-center max-w-3xl mx-auto slide-in-up">
-            <span class="section-kicker justify-center">Events</span>
+            <span class="section-kicker justify-center">{{ __('ui.section_events') }}</span>
             <h2 class="section-title mt-4">{{ $c['events_title'] }}</h2>
             <p class="section-subtitle mt-4">{{ $c['events_description'] }}</p>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-5 gap-6 mt-10">
+        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 mt-10">
             @foreach ($events as $event)
                 <div class="card p-6">
-                    <p class="text-sm font-bold uppercase tracking-[0.2em] text-accent mb-3">Event</p>
+                    <p class="text-sm font-bold uppercase tracking-[0.2em] text-accent mb-3">{{ __('ui.event_label') }}</p>
                     <h3 class="text-xl mb-3">{{ $event['title'] }}</h3>
                     <p>{{ $event['description'] }}</p>
                 </div>
@@ -284,7 +290,7 @@
 <section id="people" class="section section-anchor bg-light px-4">
     <div class="max-w-7xl mx-auto">
         <div class="max-w-3xl mx-auto text-center slide-in-up">
-            <span class="section-kicker justify-center">People</span>
+            <span class="section-kicker justify-center">{{ __('ui.section_people') }}</span>
             <h2 class="section-title mt-4">{{ $c['people_title'] }}</h2>
             <p class="section-subtitle mt-4">{{ $c['people_description'] }}</p>
         </div>
@@ -310,16 +316,18 @@
 <section id="connect" class="section section-anchor bg-background-light px-4">
     <div class="max-w-7xl mx-auto">
         <div class="max-w-3xl mx-auto text-center slide-in-up">
-            <span class="section-kicker justify-center">Connect</span>
+            <span class="section-kicker justify-center">{{ __('ui.section_connect') }}</span>
             <h2 class="section-title mt-4">{{ $c['connect_title'] }}</h2>
             <p class="section-subtitle mt-4">{{ $c['connect_description'] }}</p>
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-10">
             <div class="card p-8">
-                <h3 class="text-2xl mb-6">Contact details</h3>
+                <h3 class="text-2xl mb-6">{{ __('ui.contact_details') }}</h3>
                 <div class="space-y-4 text-text-light">
                     <p><strong class="text-text-dark">Email:</strong> {{ $c['contact_email'] }}</p>
+                    <p><strong class="text-text-dark">Website:</strong> {{ $c['contact_website'] ?? 'ssbdba.itb.ac.id' }}</p>
+                    <p><strong class="text-text-dark">Address:</strong> {{ $c['contact_address'] ?? '' }}</p>
                     <p><strong class="text-text-dark">LinkedIn:</strong> {{ $c['contact_linkedin'] }}</p>
                     <p><strong class="text-text-dark">Instagram:</strong> {{ $c['contact_instagram'] }}</p>
                     <p><strong class="text-text-dark">TikTok:</strong> {{ $c['contact_tiktok'] }}</p>
@@ -330,11 +338,11 @@
             </div>
 
             <div class="card p-8 bg-gradient-to-br from-primary to-secondary text-light">
-                <h3 class="text-2xl text-light mb-6">Quick access</h3>
-                <p class="text-background-light mb-6">Anda bisa mengganti semua isi ini dari panel admin tanpa mengedit file Blade lagi.</p>
+                <h3 class="text-2xl text-light mb-6">{{ __('ui.quick_access') }}</h3>
+                <p class="text-background-light mb-6">{{ __('ui.quick_access_description') }}</p>
                 <div class="flex flex-wrap gap-3">
-                    <a href="mailto:{{ $c['contact_email'] }}" class="btn bg-light text-primary px-5 py-3 inline-flex">Email us</a>
-                    <a href="#" class="btn bg-light/15 text-light px-5 py-3 inline-flex border border-white/20">Follow IG</a>
+                    <a href="mailto:{{ $c['contact_email'] }}" class="btn bg-light text-primary px-5 py-3 inline-flex">{{ __('ui.email_us') }}</a>
+                    <a href="#connect" class="btn bg-light/15 text-light px-5 py-3 inline-flex border border-white/20">{{ __('ui.follow_us') }}</a>
                 </div>
             </div>
         </div>

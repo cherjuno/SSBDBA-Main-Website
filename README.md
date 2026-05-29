@@ -2,6 +2,21 @@
 
 Dokumentasi singkat untuk proyek SSBDBA Main Website.
 
+## Versi Saat Ini
+- Versi catatan terbaru: `v2.1 `
+- Status: update bilingual + perapihan UI/UX
+- Tanggal pencatatan: 29 Mei 2026
+
+## Update Terbaru
+- Default bahasa dibuat English, dengan toggle `EN | ID` di kanan atas.
+- Konten publik dibuat lebih konsisten bilingual, bukan hanya menu.
+- Header dirapikan supaya logo tidak dobel dengan teks yang sama.
+- Footer diperbarui agar lebih modern, responsif, dan mengikuti identitas SBM ITB / SSBDA.
+- Social media hanya tampil kalau link aktif benar-benar tersedia.
+- Urutan section `Resources & Services` dan `Events` sudah disesuaikan.
+- Bagian `Who we are` ditambah `brand guidelines`.
+- Konten penting di admin panel diperjelas agar mudah diupdate tanpa merusak tampilan publik.
+
 ## Ringkasan
 - Framework: Laravel (>=12) dan PHP ^8.2
 - Frontend: Tailwind CSS + Vite
@@ -89,6 +104,13 @@ File upload disimpan pada `storage/app/public` dan dapat diakses dari `public/st
 - Plugin manager menerima file `.zip` tetapi ekstraksi/instalasi otomatis mungkin perlu pengembangan lebih lanjut.
 - Pastikan `APP_URL` di `.env` benar saat menjalankan Vite atau saat membuat link statis.
 - Jika menemukan error parsing di tinker pada Windows Powershell, jalankan `php artisan tinker` tanpa embedding perintah yang mengandung kutip tunggal/berganda yang kompleks.
+
+## Catatan Perubahan
+### v2.1
+- Penambahan bilingual shell untuk layout publik.
+- Perapihan header, footer, dan section landing page.
+- Penyesuaian konten admin agar tetap aman untuk data dinamis.
+- Validasi social link agar hanya domain yang sesuai yang bisa tersimpan.
 
 ## Langkah selanjutnya (opsional)
 - Integrasi editor WYSIWYG dan fitur upload gambar inline.

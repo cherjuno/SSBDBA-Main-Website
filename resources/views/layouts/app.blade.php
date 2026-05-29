@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'SSBDA Lab - Social Simulation & Big Data Analytics Laboratory')</title>
-    <meta name="description" content="Social Simulation & Big Data Analytics Laboratory - Laboratorium penelitian sosial simulasi dan analitik big data">
+    <title>@yield('title', __('ui.page_title'))</title>
+    <meta name="description" content="{{ __('ui.meta_description') }}">
     
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @stack('head')
@@ -252,45 +252,55 @@
 <body class="page-shell text-text-dark">
     <!-- Header Navigation -->
     <header>
-        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
-            <!-- Logo with Image -->
-            <div class="flex items-center space-x-4">
+        @php
+            $locale = app()->getLocale();
+            $languageToggleUrl = fn (string $language) => request()->fullUrlWithQuery(['lang' => $language]);
+        @endphp
+        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 md:py-4 flex justify-between items-center gap-3 md:gap-4">
+            <div class="flex items-center space-x-4 min-w-0">
                 <a href="#" class="flex-shrink-0">
-                    <img src="{{ asset('datalablogo.png') }}" alt="SSBDA Lab Logo" class="h-14 w-auto">
+                    <img src="{{ asset('datalablogo.png') }}" alt="SSBDA Lab Logo" class="h-14 sm:h-16 md:h-20 lg:h-24 w-auto">
                 </a>
-                <div class="hidden sm:block border-l border-secondary-2 pl-4">
-                    <h1 class="text-primary font-bold text-lg leading-tight">SSBDA Lab</h1>
-                    <p class="text-xs text-secondary-2 font-medium">Social Simulation & Big Data Analytics</p>
-                </div>
             </div>
 
             <!-- Desktop Navigation -->
-            <div class="hidden md:flex gap-4 text-xs items-center">
-                <a href="#who-we-are" class="nav-link scroll-link" data-section="who-we-are">Who we are</a>
-                <a href="#what-we-do" class="nav-link scroll-link" data-section="what-we-do">What we do</a>
-                <a href="#resources-services" class="nav-link scroll-link" data-section="resources-services">Resources and Services</a>
-                <a href="#events" class="nav-link scroll-link" data-section="events">Events</a>
-                <a href="#people" class="nav-link scroll-link" data-section="people">People</a>
-                <a href="#connect" class="nav-link scroll-link" data-section="connect">Connect</a>
+            <div class="hidden lg:flex gap-4 text-xs items-center">
+                <a href="#who-we-are" class="nav-link scroll-link" data-section="who-we-are">{{ __('ui.nav_who_we_are') }}</a>
+                <a href="#what-we-do" class="nav-link scroll-link" data-section="what-we-do">{{ __('ui.nav_what_we_do') }}</a>
+                <a href="#resources-services" class="nav-link scroll-link" data-section="resources-services">{{ __('ui.nav_resources_services') }}</a>
+                <a href="#events" class="nav-link scroll-link" data-section="events">{{ __('ui.nav_events') }}</a>
+                <a href="#people" class="nav-link scroll-link" data-section="people">{{ __('ui.nav_people') }}</a>
+                <a href="#connect" class="nav-link scroll-link" data-section="connect">{{ __('ui.nav_connect') }}</a>
             </div>
 
-            <!-- Mobile Menu Toggle -->
-            <button id="mobile-menu-btn" class="md:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors">
-                <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-                </svg>
-            </button>
+            <div class="flex items-center gap-2 md:gap-3">
+                <div class="inline-flex items-center rounded-full border border-secondary-2 bg-white p-1 text-[0.65rem] sm:text-[0.7rem] font-semibold uppercase tracking-[0.16em] sm:tracking-[0.2em]">
+                    <a href="{{ $languageToggleUrl('en') }}" class="rounded-full px-3 py-1 transition {{ $locale === 'en' ? 'bg-primary text-white' : 'text-text-light hover:text-primary' }}">EN</a>
+                    <a href="{{ $languageToggleUrl('id') }}" class="rounded-full px-3 py-1 transition {{ $locale === 'id' ? 'bg-primary text-white' : 'text-text-light hover:text-primary' }}">ID</a>
+                </div>
+
+                <!-- Mobile Menu Toggle -->
+                <button id="mobile-menu-btn" class="lg:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors">
+                    <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
         </nav>
 
         <!-- Mobile Menu -->
-        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-200 shadow-lg">
+        <div id="mobile-menu" class="hidden lg:hidden bg-white border-t border-gray-200 shadow-lg">
             <div class="px-4 py-4 space-y-3 max-w-7xl mx-auto">
-                <a href="#who-we-are" class="block nav-link py-2 px-4 text-center rounded-lg hover:bg-secondary-3 transition-colors scroll-link" data-section="who-we-are">Who we are</a>
-                <a href="#what-we-do" class="block nav-link py-2 px-4 text-center rounded-lg hover:bg-secondary-3 transition-colors scroll-link" data-section="what-we-do">What we do</a>
-                <a href="#resources-services" class="block nav-link py-2 px-4 text-center rounded-lg hover:bg-secondary-3 transition-colors scroll-link" data-section="resources-services">Resources and Services</a>
-                <a href="#events" class="block nav-link py-2 px-4 text-center rounded-lg hover:bg-secondary-3 transition-colors scroll-link" data-section="events">Events</a>
-                <a href="#people" class="block nav-link py-2 px-4 text-center rounded-lg hover:bg-secondary-3 transition-colors scroll-link" data-section="people">People</a>
-                <a href="#connect" class="block nav-link py-2 px-4 text-center rounded-lg hover:bg-secondary-3 transition-colors scroll-link" data-section="connect">Connect</a>
+                <div class="flex justify-center gap-2 pb-2">
+                    <a href="{{ $languageToggleUrl('en') }}" class="rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] {{ $locale === 'en' ? 'bg-primary text-white' : 'bg-secondary-3 text-text-dark' }}">EN</a>
+                    <a href="{{ $languageToggleUrl('id') }}" class="rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] {{ $locale === 'id' ? 'bg-primary text-white' : 'bg-secondary-3 text-text-dark' }}">ID</a>
+                </div>
+                <a href="#who-we-are" class="block nav-link py-2 px-4 text-center rounded-lg hover:bg-secondary-3 transition-colors scroll-link" data-section="who-we-are">{{ __('ui.nav_who_we_are') }}</a>
+                <a href="#what-we-do" class="block nav-link py-2 px-4 text-center rounded-lg hover:bg-secondary-3 transition-colors scroll-link" data-section="what-we-do">{{ __('ui.nav_what_we_do') }}</a>
+                <a href="#resources-services" class="block nav-link py-2 px-4 text-center rounded-lg hover:bg-secondary-3 transition-colors scroll-link" data-section="resources-services">{{ __('ui.nav_resources_services') }}</a>
+                <a href="#events" class="block nav-link py-2 px-4 text-center rounded-lg hover:bg-secondary-3 transition-colors scroll-link" data-section="events">{{ __('ui.nav_events') }}</a>
+                <a href="#people" class="block nav-link py-2 px-4 text-center rounded-lg hover:bg-secondary-3 transition-colors scroll-link" data-section="people">{{ __('ui.nav_people') }}</a>
+                <a href="#connect" class="block nav-link py-2 px-4 text-center rounded-lg hover:bg-secondary-3 transition-colors scroll-link" data-section="connect">{{ __('ui.nav_connect') }}</a>
             </div>
         </div>
     </header>
@@ -299,47 +309,136 @@
     <main>
         @yield('content')
 
-        <footer class="bg-text-dark text-background-light">
-            <div class="max-w-7xl mx-auto px-4 py-12">
-                <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-                    <div class="md:col-span-2">
-                        <h3 class="text-xl font-bold text-light mb-4">SSBDA Laboratory</h3>
-                        <p class="text-text-light max-w-md">
-                            Laboratorium riset Social Simulation & Big Data Analytics (SSBDA) berfokus pada pemodelan kompleksitas sosial dan analisis data skala besar untuk memahami dinamika masyarakat.
-                        </p>
-                    </div>
-                    <div>
-                        <h4 class="font-semibold text-light mb-4">Quick Links</h4>
-                        <ul class="space-y-2">
-                            <li><a href="#who-we-are" class="text-text-light hover:text-accent transition">Who we are</a></li>
-                            <li><a href="#what-we-do" class="text-text-light hover:text-accent transition">What we do</a></li>
-                            <li><a href="#resources-services" class="text-text-light hover:text-accent transition">Resources and Services</a></li>
-                            <li><a href="#events" class="text-text-light hover:text-accent transition">Events</a></li>
-                            <li><a href="#people" class="text-text-light hover:text-accent transition">People</a></li>
-                            <li><a href="#connect" class="text-text-light hover:text-accent transition">Contact</a></li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h4 class="font-semibold text-light mb-4">Follow Us</h4>
-                        <div class="flex space-x-4">
-                            <a href="#" class="text-text-light hover:text-accent transition">
-                                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clip-rule="evenodd" /></svg>
-                            </a>
-                            <a href="#" class="text-text-light hover:text-accent transition">
-                                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.71v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" /></svg>
-                            </a>
-                            <a href="#" class="text-text-light hover:text-accent transition">
-                                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12.019c0 3.443 1.717 6.45 4.315 8.217-.186.85-.73 2.955-.73 2.955s.227-.118.612-.39c.385-.272.965-.67 1.515-1.026A10.03 10.03 0 0012 22.019c5.523 0 10-4.477 10-10.001S17.523 2 12 2zm-1.025 8.885a1.12 1.12 0 11-2.24 0 1.12 1.12 0 012.24 0zm4.26 0a1.12 1.12 0 11-2.24 0 1.12 1.12 0 012.24 0zm-2.13-3.64a1.12 1.12 0 11-2.24 0 1.12 1.12 0 012.24 0z" clip-rule="evenodd" /></svg>
-                            </a>
+        <footer class="relative overflow-hidden bg-[linear-gradient(180deg,#08192d_0%,#0f2747_100%)] text-white">
+            @php
+                $footerContent = $content ?? config('landing.defaults');
+                $socialLinks = array_filter([
+                    'instagram' => $footerContent['contact_instagram'] ?? '',
+                    'linkedin' => $footerContent['contact_linkedin'] ?? '',
+                    'youtube' => $footerContent['contact_youtube'] ?? '',
+                    'tiktok' => $footerContent['contact_tiktok'] ?? '',
+                    'facebook' => $footerContent['contact_facebook'] ?? '',
+                ]);
+            @endphp
+
+            <div class="absolute inset-0 pointer-events-none opacity-70">
+                <div class="absolute -top-28 -right-20 h-80 w-80 rounded-full bg-secondary/20 blur-3xl"></div>
+                <div class="absolute -bottom-28 -left-20 h-80 w-80 rounded-full bg-accent/15 blur-3xl"></div>
+            </div>
+
+            <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-12 lg:py-14">
+                <div class="rounded-[2rem] border border-white/10 bg-white/6 backdrop-blur-sm shadow-2xl shadow-black/15 p-6 sm:p-8 lg:p-10">
+                    <div class="flex flex-col gap-8 xl:grid xl:grid-cols-[1.4fr_1fr_1fr] xl:gap-10">
+                        <div class="space-y-5">
+                            <div class="flex items-center gap-3">
+                                <img src="{{ asset('datalablogo.png') }}" alt="SSBDA Lab Logo" class="h-12 sm:h-14 w-auto shrink-0">
+                                <div class="hidden sm:block h-10 w-px bg-white/20"></div>
+                                <div class="hidden sm:block">
+                                    <p class="text-[0.65rem] sm:text-xs uppercase tracking-[0.3em] text-white/55">{{ __('ui.footer_lab_name') }}</p>
+                                    <p class="text-xs text-white/70 mt-1">{{ __('ui.footer_school') }}</p>
+                                </div>
+                            </div>
+
+                            <div class="space-y-3 max-w-xl">
+                                <h3 class="text-2xl sm:text-3xl font-semibold text-white leading-tight">{{ __('ui.footer_lab_name') }}</h3>
+                                <p class="text-white/75 text-sm sm:text-base leading-7 max-w-2xl">{{ $footerContent['contact_address'] ?? 'SSDATALAB, Labtek XIX, 3rd Floor, Jl. Ganesha Nol 10, Bandung 40132' }}</p>
+                            </div>
+
+                            <div class="flex flex-wrap items-center gap-3 sm:gap-4">
+                                <div class="inline-flex items-center gap-3 rounded-full border border-white/15 bg-white/8 px-4 py-2">
+                                    <span class="text-[0.65rem] sm:text-xs uppercase tracking-[0.25em] text-white/65">{{ __('ui.part_of') }}</span>
+                                    <img src="{{ asset('sbmlogo.png') }}" alt="SBM ITB Logo" class="h-7 sm:h-8 w-auto">
+                                </div>
+                                <div class="inline-flex items-center gap-3 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-white/75">
+                                    <span class="font-semibold text-white">{{ __('ui.footer_email') }}</span>
+                                    <a href="mailto:{{ $footerContent['contact_email'] ?? '' }}" class="break-all hover:text-secondary transition">{{ $footerContent['contact_email'] ?? '' }}</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-4 sm:gap-5">
+                            <div class="rounded-2xl border border-white/10 bg-white/5 p-4 sm:p-5">
+                                <h4 class="font-semibold text-white mb-4">{{ __('ui.quick_links') }}</h4>
+                                <ul class="space-y-3 text-sm sm:text-[0.95rem]">
+                                    <li><a href="#who-we-are" class="text-white/75 hover:text-secondary transition">{{ __('ui.nav_who_we_are') }}</a></li>
+                                    <li><a href="#what-we-do" class="text-white/75 hover:text-secondary transition">{{ __('ui.nav_what_we_do') }}</a></li>
+                                    <li><a href="#resources-services" class="text-white/75 hover:text-secondary transition">{{ __('ui.nav_resources_services') }}</a></li>
+                                    <li><a href="#events" class="text-white/75 hover:text-secondary transition">{{ __('ui.nav_events') }}</a></li>
+                                    <li><a href="#people" class="text-white/75 hover:text-secondary transition">{{ __('ui.nav_people') }}</a></li>
+                                    <li><a href="#connect" class="text-white/75 hover:text-secondary transition">{{ __('ui.nav_connect') }}</a></li>
+                                </ul>
+                            </div>
+
+                            <div class="rounded-2xl border border-white/10 bg-white/5 p-4 sm:p-5">
+                                <h4 class="font-semibold text-white mb-4">{{ __('ui.follow_us') }}</h4>
+                                @if (count($socialLinks) > 0)
+                                    <div class="flex flex-wrap gap-2 sm:gap-3">
+                                        @if (! empty($socialLinks['instagram']))
+                                            <a href="{{ $socialLinks['instagram'] }}" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/12 bg-white/8 text-white/80 transition hover:-translate-y-0.5 hover:bg-white/15 hover:text-secondary">
+                                                <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M7.75 2h8.5A5.76 5.76 0 0 1 22 7.75v8.5A5.76 5.76 0 0 1 16.25 22h-8.5A5.76 5.76 0 0 1 2 16.25v-8.5A5.76 5.76 0 0 1 7.75 2Zm0 2A3.76 3.76 0 0 0 4 7.75v8.5A3.76 3.76 0 0 0 7.75 20h8.5A3.76 3.76 0 0 0 20 16.25v-8.5A3.76 3.76 0 0 0 16.25 4h-8.5Zm4.25 3a5 5 0 1 1 0 10 5 5 0 0 1 0-10Zm0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6Zm5.1-2.35a1.15 1.15 0 1 1 0 2.3 1.15 1.15 0 0 1 0-2.3Z"/></svg>
+                                            </a>
+                                        @endif
+                                        @if (! empty($socialLinks['linkedin']))
+                                            <a href="{{ $socialLinks['linkedin'] }}" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" class="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/12 bg-white/8 text-white/80 transition hover:-translate-y-0.5 hover:bg-white/15 hover:text-secondary">
+                                                <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.98 3.5C4.98 4.88 3.89 6 2.5 6S0 4.88 0 3.5 1.11 1 2.5 1 4.98 2.12 4.98 3.5ZM0 8h5v16H0V8Zm7.5 0H12v2.2h.1c.6-1.1 2.1-2.2 4.3-2.2C21 8 22 11 22 15.2V24h-5v-7.8c0-1.9 0-4.3-2.6-4.3s-3 2-3 4.1V24h-5V8Z"/></svg>
+                                            </a>
+                                        @endif
+                                        @if (! empty($socialLinks['youtube']))
+                                            <a href="{{ $socialLinks['youtube'] }}" target="_blank" rel="noopener noreferrer" aria-label="YouTube" class="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/12 bg-white/8 text-white/80 transition hover:-translate-y-0.5 hover:bg-white/15 hover:text-secondary">
+                                                <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M21.8 8s-.2-1.4-.9-2c-.9-.9-1.9-.9-2.4-1C15 4.6 12 4.6 12 4.6h0s-3 0-6.5.4c-.5.1-1.5.1-2.4 1-.7.6-.9 2-.9 2S2 9.5 2 11v2c0 1.5.2 3 .2 3s.2 1.4.9 2c.9.9 2 .9 2.5 1 1.8.2 7.4.4 7.4.4s3 0 6.5-.4c.5-.1 1.5-.1 2.4-1 .7-.6.9-2 .9-2s.2-1.5.2-3v-2c0-1.5-.2-3-.2-3ZM9.7 15.2V8.8l6 3.2-6 3.2Z"/></svg>
+                                            </a>
+                                        @endif
+                                        @if (! empty($socialLinks['tiktok']))
+                                            <a href="{{ $socialLinks['tiktok'] }}" target="_blank" rel="noopener noreferrer" aria-label="TikTok" class="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/12 bg-white/8 text-white/80 transition hover:-translate-y-0.5 hover:bg-white/15 hover:text-secondary">
+                                                <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M17 3c.4 2.2 1.8 3.8 4 4v3.1c-1.5 0-2.9-.4-4-1.2v5.7c0 3.4-2.7 6.1-6.1 6.1S4.8 18 4.8 14.6s2.7-6.1 6.1-6.1c.3 0 .6 0 1 .1v3.2c-.3-.1-.7-.2-1-.2-1.6 0-2.9 1.3-2.9 2.9 0 1.6 1.3 2.9 2.9 2.9 1.7 0 3-1.3 3-3V3h3.1Z"/></svg>
+                                            </a>
+                                        @endif
+                                        @if (! empty($socialLinks['facebook']))
+                                            <a href="{{ $socialLinks['facebook'] }}" target="_blank" rel="noopener noreferrer" aria-label="Facebook" class="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/12 bg-white/8 text-white/80 transition hover:-translate-y-0.5 hover:bg-white/15 hover:text-secondary">
+                                                <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.99 3.66 9.13 8.44 9.88v-6.99h-2.54V12h2.54V9.8c0-2.5 1.49-3.89 3.78-3.89 1.09 0 2.23.19 2.23.19v2.45h-1.26c-1.24 0-1.63.77-1.63 1.57V12h2.77l-.44 2.89h-2.33v6.99C18.34 21.13 22 16.99 22 12Z" clip-rule="evenodd"/></svg>
+                                            </a>
+                                        @endif
+                                    </div>
+                                @else
+                                    <p class="text-sm text-white/65 leading-6">{{ __('ui.social_placeholder') }}</p>
+                                @endif
+
+                                <div class="mt-5 rounded-xl border border-white/10 bg-white/5 p-4">
+                                    <p class="text-xs uppercase tracking-[0.2em] text-white/55 mb-2">{{ __('ui.footer_website') }}</p>
+                                    <a href="{{ $footerContent['contact_website_url'] ?? '#' }}" class="text-white font-semibold hover:text-secondary transition break-all">{{ $footerContent['contact_website'] ?? 'ssbdba.itb.ac.id' }}</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="rounded-2xl border border-white/10 bg-white/5 p-4 sm:p-5 xl:col-span-3">
+                            <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+                                <div class="space-y-2">
+                                    <p class="text-xs uppercase tracking-[0.22em] text-white/55">{{ __('ui.footer_contact') }}</p>
+                                    <p class="text-sm sm:text-base text-white/75 leading-7">
+                                        {{ $footerContent['contact_address'] ?? 'SSDATALAB, Labtek XIX, 3rd Floor, Jl. Ganesha Nol 10, Bandung 40132' }}
+                                    </p>
+                                </div>
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 w-full md:max-w-xl">
+                                    <a href="mailto:{{ $footerContent['contact_email'] ?? '' }}" class="flex items-center justify-between rounded-xl border border-white/10 bg-white/6 px-4 py-3 text-sm sm:text-base text-white/80 transition hover:-translate-y-0.5 hover:bg-white/10 hover:text-secondary">
+                                        <span class="font-medium">{{ __('ui.footer_email') }}</span>
+                                        <span class="break-all text-right">{{ $footerContent['contact_email'] ?? '' }}</span>
+                                    </a>
+                                    <a href="{{ $footerContent['contact_website_url'] ?? '#' }}" class="flex items-center justify-between rounded-xl border border-white/10 bg-white/6 px-4 py-3 text-sm sm:text-base text-white/80 transition hover:-translate-y-0.5 hover:bg-white/10 hover:text-secondary">
+                                        <span class="font-medium">{{ __('ui.footer_website') }}</span>
+                                        <span class="break-all text-right">{{ $footerContent['contact_website'] ?? 'ssbdba.itb.ac.id' }}</span>
+                                    </a>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="mt-8 border-t border-gray-700 pt-6 text-center text-text-light text-sm">
-                    <p>&copy; {{ date('Y') }} SSBDA Laboratory. All Rights Reserved.</p>
+
+                    <div class="mt-8 border-t border-white/10 pt-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between text-sm text-white/60">
+                        <p>&copy; {{ date('Y') }} SSBDA Laboratory. {{ __('ui.footer_rights') }}</p>
+                        <p class="uppercase tracking-[0.2em] text-[0.65rem] text-white/45">{{ __('ui.footer_lab_name') }}</p>
+                    </div>
                 </div>
             </div>
-        </div>
-    </footer>
+        </footer>
 
     <a href="#" id="back-to-top" class="fixed bottom-8 right-8 bg-accent text-light w-12 h-12 rounded-full shadow-lg flex items-center justify-center opacity-0 invisible transition-all duration-300 hover:bg-opacity-90">
         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path></svg>
