@@ -99,7 +99,7 @@ File upload disimpan pada `storage/app/public` dan dapat diakses dari `public/st
 - Build assets produksi: `npm run build`
 - Jalankan server laravel: `php artisan serve`
 
-## Catatan pengembang
+## Catatan dari chandra
 - Editor WYSIWYG (CKEditor/TinyMCE) belum terpasang penuh; integrasi image-insert endpoint ada pada controller artikel.
 - Plugin manager menerima file `.zip` tetapi ekstraksi/instalasi otomatis mungkin perlu pengembangan lebih lanjut.
 - Pastikan `APP_URL` di `.env` benar saat menjalankan Vite atau saat membuat link statis.
